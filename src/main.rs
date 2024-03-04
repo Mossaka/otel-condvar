@@ -56,10 +56,12 @@ fn shim_main() {
 
             spawn();
 
-            thread::spawn(move || {
+            let join = thread::spawn(move || {
                 sleep(std::time::Duration::from_secs(3));
                 exit.signal();
             });
+
+            join.join().unwrap();
         }
         Some(arg) if arg == "2" => {
             a2();
